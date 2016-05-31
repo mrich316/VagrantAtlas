@@ -1,0 +1,5 @@
+text eof=lf
+*.cs eof=crlf
+*.csproj eof=crlf
+*.sln eof=crlf
+*.config eof=crlf
