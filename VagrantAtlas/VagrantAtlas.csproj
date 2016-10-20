@@ -58,11 +58,11 @@
     <Compile Include="BoxesController.cs" />
     <Compile Include="BoxReference.cs" />
     <Compile Include="IBoxRepository.cs" />
+    <Compile Include="JsonFileBackedAtlas.cs" />
     <Compile Include="MemoryAtlas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BoxVersion.cs" />
     <Compile Include="BoxProvider.cs" />
-    <Compile Include="SnakeCasePropertyNameContractSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

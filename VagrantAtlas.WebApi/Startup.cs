@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using Newtonsoft.Json;
@@ -28,7 +29,7 @@ namespace VagrantAtlas.WebApi
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/plain"));
 
-            config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
+            var jsonSettings = config.Formatters.JsonFormatter.SerializerSettings = new JsonSerializerSettings
             {
                 ContractResolver = new SnakeCasePropertyNameContractSerializer(),
                 DefaultValueHandling = DefaultValueHandling.Ignore,
@@ -36,9 +37,10 @@ namespace VagrantAtlas.WebApi
                 Formatting = Formatting.Indented
             };
 
-            var memoryAtlas = new MemoryAtlas(Atlas.Boxes);
+            var filePath = HostingEnvironment.MapPath("~/App_Data/boxes.json");
+            var atlas = new JsonFileBackedAtlas(filePath, jsonSettings);
 
-            config.Services.Replace(typeof(IHttpControllerActivator), new SingletonRepositoriesHttpControllerActivator(memoryAtlas));
+            config.Services.Replace(typeof(IHttpControllerActivator), new SingletonRepositoriesHttpControllerActivator(atlas));
 
             app.UseWebApi(config);
         }
