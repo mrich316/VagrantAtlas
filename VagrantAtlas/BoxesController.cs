@@ -26,6 +26,7 @@ namespace VagrantAtlas
                 : Ok(atlasBox);
         }
 
+        [Authorize]
         [HttpPut]
         public IHttpActionResult Put(string user, string name, string version, [FromBody] BoxProvider provider)
         {

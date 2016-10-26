@@ -1,9 +1,14 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Collections.Generic;
+using System.Configuration;
+using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using Newtonsoft.Json;
 using Owin;
+using Thinktecture.IdentityModel.Owin;
 
 namespace VagrantAtlas.WebApi
 {
@@ -11,6 +16,10 @@ namespace VagrantAtlas.WebApi
     {
         public static void Configuration(IAppBuilder app)
         {
+            app.UseBasicAuthentication(new BasicAuthenticationOptions("atlas",
+                new BasicAuthenticator(ConfigurationManager.AppSettings["atlas:id"],
+                    ConfigurationManager.AppSettings["atlas:secret"]).Authenticate));
+
             var config = new HttpConfiguration();
 
             config.MapHttpAttributeRoutes();
@@ -44,5 +53,6 @@ namespace VagrantAtlas.WebApi
 
             app.UseWebApi(config);
         }
+
     }
 }
