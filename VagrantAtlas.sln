@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VagrantAtlas.WebApi", "VagrantAtlas.WebApi\VagrantAtlas.WebApi.csproj", "{3C9B0160-1043-49C1-BA9C-C9E468BD62B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VagrantAtlas", "VagrantAtlas\VagrantAtlas.csproj", "{43E21854-8356-40A9-B801-D285F8CBA2A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VagrantAtlas.Tests", "VagrantAtlas.Tests\VagrantAtlas.Tests.csproj", "{46E9A543-B86E-4B23-82CA-F7617CDDA9F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{43E21854-8356-40A9-B801-D285F8CBA2A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43E21854-8356-40A9-B801-D285F8CBA2A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43E21854-8356-40A9-B801-D285F8CBA2A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46E9A543-B86E-4B23-82CA-F7617CDDA9F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46E9A543-B86E-4B23-82CA-F7617CDDA9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46E9A543-B86E-4B23-82CA-F7617CDDA9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46E9A543-B86E-4B23-82CA-F7617CDDA9F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
