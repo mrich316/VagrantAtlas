@@ -14,12 +14,13 @@ I did not invent anything, others chewed everything for me and credits go to the
 ## Customize and Deploy
 
 To be production-ready, this project requires a more robust implementation of IBoxRepository.
-I only provide an in-memory implementation. You should also customize Startup.cs to fit your needs.
-You could replace the very simple SingletonRepositoriesHttpControllerActivator.cs by a production DI/IoC container
+I only provide an in-memory implementation or a json backed file storage. You should also
+customize Startup.cs to fit your needs. You could replace the very simple
+SingletonRepositoriesHttpControllerActivator.cs by a production DI/IoC container
 or simply embed the library (VagrantAtlas) in your own ASP.NET project.
 
-This project has no security at all ! Anybody can put and update vagrant boxes.
-After all, it's only a proof of concept ! You have been warned.
+This project only protects __PUT__ calls with Basic Authentication. Currently, only a single
+user is supported and configured in web.config.
 
 ## Endpoints
 ### __GET /__ (defaults to /atlas)
