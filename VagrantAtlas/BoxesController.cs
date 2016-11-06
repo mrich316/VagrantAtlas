@@ -10,7 +10,7 @@ namespace VagrantAtlas
 
         public BoxesController(IBoxRepository boxRepository)
         {
-            if (boxRepository == null) throw new ArgumentNullException("boxRepository");
+            if (boxRepository == null) throw new ArgumentNullException(nameof(boxRepository));
 
             _boxRepository = boxRepository;
         }
@@ -18,8 +18,7 @@ namespace VagrantAtlas
         [HttpHead, HttpGet]
         public IHttpActionResult Get(string user, string name)
         {
-            var id = string.Format("{0}/{1}", user, name);
-            var atlasBox = _boxRepository.Get(id);
+            var atlasBox = _boxRepository.Get(user, name);
 
             return (atlasBox == null)
                 ? (IHttpActionResult)NotFound()

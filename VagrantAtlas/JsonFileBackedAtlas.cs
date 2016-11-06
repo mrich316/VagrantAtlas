@@ -36,9 +36,9 @@ namespace VagrantAtlas
             return _innerAtlas.GetAll();
         }
 
-        public Box Get(string id)
+        public Box Get(string user, string boxName)
         {
-            return _innerAtlas.Get(id);
+            return _innerAtlas.Get(user, boxName);
         }
 
         public Box AddOrUpdate(Box box)

@@ -6,7 +6,7 @@ namespace VagrantAtlas
     {
         IEnumerable<Box> GetAll();
 
-        Box Get(string id);
+        Box Get(string user, string boxName);
 
         Box AddOrUpdate(Box box);
     }

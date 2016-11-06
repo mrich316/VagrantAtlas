@@ -14,8 +14,8 @@ namespace VagrantAtlas
             foreach (var box in boxes.Where(box => !_atlas.TryAdd(GetId(box), box)))
             {
                 throw new ArgumentException(
-                    string.Format("Multiple boxes with same id found: {0} already exist.", GetId(box)),
-                    "boxes");
+                    $"Multiple boxes with same id found: {GetId(box)} already exist.",
+                    nameof(boxes));
             }
         }
 
@@ -25,7 +25,12 @@ namespace VagrantAtlas
 
         protected string GetId(Box box)
         {
-            return string.Format("{0}/{1}", box.User, box.Name);
+            return GetId(box.User, box.Name);
+        }
+
+        protected string GetId(string user, string boxName)
+        {
+            return $"{user}/{boxName}";
         }
 
         public IEnumerable<Box> GetAll()
@@ -33,8 +38,9 @@ namespace VagrantAtlas
             return _atlas.Values;
         }
 
-        public Box Get(string id)
+        public Box Get(string user, string boxName)
         {
+            var id = GetId(user, boxName);
             Box box;
             _atlas.TryGetValue(id, out box);
 
