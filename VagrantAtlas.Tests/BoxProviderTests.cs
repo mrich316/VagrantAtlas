@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Security.Cryptography;
 using Xunit;
 
 namespace VagrantAtlas.Tests
@@ -18,7 +21,7 @@ namespace VagrantAtlas.Tests
             var results = new List<ValidationResult>();
             var context = new ValidationContext(sut, null, null)
             {
-                MemberName = "ChecksumType"
+                MemberName = nameof(sut.ChecksumType)
             };
 
             Assert.True(Validator.TryValidateProperty(sut.ChecksumType, context, results),
@@ -33,10 +36,39 @@ namespace VagrantAtlas.Tests
             var results = new List<ValidationResult>();
             var context = new ValidationContext(sut, null, null)
             {
-                MemberName = "ChecksumType"
+                MemberName = nameof(sut.ChecksumType)
             };
 
             Assert.False(Validator.TryValidateProperty(sut.ChecksumType, context, results));
+        }
+
+        [Theory, UnitTestConventions]
+        public void Checksum_IsValid(byte[] hashSource, BoxProvider sut)
+        {
+            var hash = SHA256.Create().ComputeHash(hashSource);
+            sut.Checksum = new SoapHexBinary(hash).ToString();
+
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(sut, null, null)
+            {
+                MemberName = nameof(sut.Checksum)
+            };
+
+            Assert.True(Validator.TryValidateProperty(sut.Checksum, context, results));
+        }
+
+        [Theory, UnitTestConventions]
+        public void Checksum_IsInvalid(string checksum, BoxProvider sut)
+        {
+            sut.Checksum = checksum;
+
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(sut, null, null)
+            {
+                MemberName = nameof(sut.Checksum)
+            };
+
+            Assert.False(Validator.TryValidateProperty(sut.Checksum, context, results));
         }
 
         [Theory]
@@ -56,6 +88,53 @@ namespace VagrantAtlas.Tests
 
                 Assert.False(Validator.TryValidateProperty(value, context, results));
             }
+        }
+
+        [Theory, UnitTestConventions]
+        public void Url_IsInvalid_OnLengthGreaterThan4096(string url, BoxProvider sut)
+        {
+            while (url.Length < 4096)
+            {
+                url += url;
+            }
+
+            sut.Url = "http://localhost.localtest.me/" + url;
+
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(sut, null, null)
+            {
+                MemberName = nameof(sut.Url)
+            };
+
+            Assert.False(Validator.TryValidateProperty(sut.Url, context, results));
+        }
+
+        [Theory, UnitTestConventions]
+        public void Url_IsInvalid_OnUrlNotFQDN(string url, BoxProvider sut)
+        {
+            sut.Url = "http://localhost/" + url;
+
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(sut, null, null)
+            {
+                MemberName = nameof(sut.Url)
+            };
+
+            Assert.False(Validator.TryValidateProperty(sut.Url, context, results));
+        }
+
+        [Theory, UnitTestConventions]
+        public void Url_IsValid_OnUrlFQDN(string url, BoxProvider sut)
+        {
+            sut.Url = "http://localhost.localtest.me/" + url;
+
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(sut, null, null)
+            {
+                MemberName = nameof(sut.Url)
+            };
+
+            Assert.True(Validator.TryValidateProperty(sut.Url, context, results));
         }
     }
 }
