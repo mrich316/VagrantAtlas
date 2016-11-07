@@ -9,8 +9,5 @@ namespace VagrantAtlas
 
         [Required, StringLength(60), RegularExpression("^[a-zA-Z0-9_]+$")]
         public string Name { get; set; }
-
-        [Required, RegularExpression(@"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$")]
-        public string Version { get; set; }
     }
 }

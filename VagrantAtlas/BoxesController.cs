@@ -16,9 +16,9 @@ namespace VagrantAtlas
         }
 
         [HttpHead, HttpGet]
-        public IHttpActionResult Get(string user, string name)
+        public IHttpActionResult Get([FromUri] BoxReference boxReference)
         {
-            var atlasBox = _boxRepository.Get(user, name);
+            var atlasBox = _boxRepository.Get(boxReference.User, boxReference.Name);
 
             return (atlasBox == null)
                 ? (IHttpActionResult)NotFound()
@@ -27,34 +27,17 @@ namespace VagrantAtlas
 
         [Authorize]
         [HttpPut]
-        public IHttpActionResult Put(string user, string name, string version, [FromBody] BoxProvider provider)
+        public IHttpActionResult Put([FromUri] BoxReferenceVersion boxReferenceVersion, [FromBody] BoxProvider provider)
         {
-            // When BoxReference and BoxProvider are in the PUT signature call, we have the following ASP.NET error:
-            // "Can't bind multiple parameters ('boxReference' and 'provider') to the request's content."
-            // We create the object and validate it manually to bypass this.
-            var boxReference = new BoxReference
-            {
-                User = user,
-                Name = name,
-                Version = version
-            };
-
-            Validate(boxReference);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var box = new Box
             {
-                Name = boxReference.Name,
-                User = boxReference.User,
+                Name = boxReferenceVersion.Name,
+                User = boxReferenceVersion.User,
                 Versions = new List<BoxVersion>
                 {
                     new BoxVersion
                     {
-                        Version = boxReference.Version,
+                        Version = boxReferenceVersion.Version,
                         Providers = new List<BoxProvider>
                         {
                             provider

@@ -21,6 +21,9 @@ namespace VagrantAtlas.Tests
             fixture.Customize<HttpRequestContext>(c => c
                 .Without(x => x.ClientCertificate));
 
+            fixture.Customize<HttpActionContext>(c => c
+                .Without(x => x.Response));
+
             fixture.Customize<IBoxRepository>(c => c
                 .FromFactory(fixture.Create<MemoryAtlas>));
         }

@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
@@ -21,6 +18,7 @@ namespace VagrantAtlas.WebApi
                     ConfigurationManager.AppSettings["atlas:secret"]).Authenticate));
 
             var config = new HttpConfiguration();
+            config.Filters.Add(new ValidateAttribute());
 
             config.MapHttpAttributeRoutes();
 
