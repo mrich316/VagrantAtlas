@@ -22,7 +22,7 @@ namespace VagrantAtlas.WebApi
 
             return Task.FromResult<IEnumerable<Claim>>(new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, "id")
+                new Claim(ClaimTypes.NameIdentifier, id)
             });
         }
     }
