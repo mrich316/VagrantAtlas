@@ -40,8 +40,8 @@ Example payload:
     {
       "name": "virtualbox",
       "url": "http://your.server.domain/path/to/boxes/my.box",
-      "checksum_type": "sha1",
-      "checksum": "hexstring"
+      "checksum_type": "sha256",
+      "checksum": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
     }
 
 The box is not sent, only a pointer to itself. It is your duty
@@ -52,13 +52,13 @@ The url will by poked by the vagrant client on *vagrant init*.
 
 To use your newly published box:
 
-    vagrant init user/box_name http://your.server.domain/api_location/boxes/user/box_name
+    vagrant init box_name http://your.server.domain/api_location/boxes/user/box_name
 
 To edit an existing VagrantFile, update the files
 
     # Every Vagrant development environment requires a box. You can search for
     # boxes at https://atlas.hashicorp.com/search.
-    config.vm.box = "user/box_name"
+    config.vm.box = "box_name"
 
     # The url from where the 'config.vm.box' box will be fetched if it
     # doesn't already exist on the user's system.
