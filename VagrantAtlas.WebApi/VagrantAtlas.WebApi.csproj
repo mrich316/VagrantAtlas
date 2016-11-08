@@ -98,6 +98,8 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="App_Data\README.md" />
+    <None Include="VagrantAtlas.WebApi.wpp.targets" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -120,9 +122,6 @@
       <Project>{43E21854-8356-40A9-B801-D285F8CBA2A2}</Project>
       <Name>VagrantAtlas</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
