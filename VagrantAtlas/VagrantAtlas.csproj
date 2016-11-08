@@ -59,6 +59,7 @@
     <Compile Include="BoxesController.cs" />
     <Compile Include="BoxReference.cs" />
     <Compile Include="BoxReferenceVersion.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="IBoxRepository.cs" />
     <Compile Include="JsonFileBackedAtlas.cs" />
     <Compile Include="MemoryAtlas.cs" />

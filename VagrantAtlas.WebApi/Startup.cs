@@ -23,14 +23,14 @@ namespace VagrantAtlas.WebApi
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                "DefaultApi",
+                Constants.RouteNames.Default,
                 "{controller}/{id}",
                 new { controller = "atlas", id = RouteParameter.Optional });
 
             config.Routes.MapHttpRoute(
-                "BoxesApi",
-                "{controller}/{user}/{name}/{version}",
-                new { version = RouteParameter.Optional });
+                Constants.RouteNames.Boxes,
+                "boxes/{user}/{name}/{version}",
+                new { controller = "boxes", version = RouteParameter.Optional });
 
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 

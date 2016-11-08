@@ -39,11 +39,11 @@ namespace VagrantAtlas.Tests
         }
 
         [Theory, UnitTestConventions]
-        public void Put_ReturnsOk_OnBoxCreated([Frozen] IBoxRepository repository, BoxesController sut, BoxReferenceVersion reference, BoxProvider provider)
+        public void Put_ReturnsCreatedAt_OnBoxCreated([Frozen] IBoxRepository repository, BoxesController sut, BoxReferenceVersion reference, BoxProvider provider)
         {
             Assert.Null(repository.Get(reference.User, reference.Name));
 
-            Assert.IsType<OkNegotiatedContentResult<Box>>(sut.Put(reference, provider));
+            Assert.IsType<CreatedAtRouteNegotiatedContentResult<Box>>(sut.Put(reference, provider));
 
             var actual = repository.Get(reference.User, reference.Name);
             Assert.NotNull(actual);
@@ -53,7 +53,7 @@ namespace VagrantAtlas.Tests
         }
 
         [Theory, UnitTestConventions]
-        public void Put_ReturnsOk_OnBoxUpdated([Frozen] IBoxRepository repository, BoxesController sut, BoxReferenceVersion reference, BoxProvider provider)
+        public void Put_ReturnsCreatedAt_OnBoxUpdated([Frozen] IBoxRepository repository, BoxesController sut, BoxReferenceVersion reference, BoxProvider provider)
         {
             repository.AddOrUpdate(new Box
             {
@@ -61,7 +61,7 @@ namespace VagrantAtlas.Tests
                 User = reference.User
             });
 
-            Assert.IsType<OkNegotiatedContentResult<Box>>(sut.Put(reference, provider));
+            Assert.IsType<CreatedAtRouteNegotiatedContentResult<Box>>(sut.Put(reference, provider));
 
             var actual = repository.Get(reference.User, reference.Name);
             Assert.NotNull(actual);

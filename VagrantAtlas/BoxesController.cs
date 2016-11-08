@@ -47,7 +47,7 @@ namespace VagrantAtlas
             };
 
             var newBox = _boxRepository.AddOrUpdate(box);
-            return Ok(newBox);
+            return CreatedAtRoute(Constants.RouteNames.Boxes, boxReferenceVersion, newBox);
         }
     }
 }
