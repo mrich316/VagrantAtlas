@@ -1,0 +1,62 @@
+﻿<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vagrant Atlas Gallery: Hosting your vagrant boxes on premise.</title>
+    <meta name="description" content="VagrantAtlas Gallery: Hosting your vagrant boxes on premise.">
+    <meta name="author" content="mrich316">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+</head>
+<body>
+<div ng-controller="vagrantAtlas" class="container">
+    <div class="page-header">
+        <h1 class="hidden-xs">Vagrant Atlas Gallery</h1>
+        <p class="hidden-xs lead">Hosting your vagrant boxes on premise.</p>
+        <blockquote class="hidden-xs hidden-sm">
+            <p>
+                Computers are incredibly fast, accurate and stupid.
+                Humans are incredibly slow, inaccurate and brilliant.
+                Together they are powerful beyond imagination.
+            </p>
+            <footer>“Advances in Instrumentation” v.24 pt.4, 1969, page 691, published by Instrument Society of America</footer>
+        </blockquote>
+
+        <table class="table">
+            <caption>Virtual machines currently available</caption>
+            <tr><th colspan="2">Boxes</th></tr>
+            <tr ng-repeat="box in boxes" class="list-unstyled">
+                <td><a href="api/boxes/{{ box.user + '/' + box.name }}">{{ box.name }}</a></td>
+                <td class="hidden-xs">{{ box.description }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <h2 class="hidden-xs">
+        To use a machine, install <a href="https://www.vagrantup.com/docs/getting-started/">Vagrant</a> and start coding !
+    </h2>
+    <div class="hidden-xs">
+        <p>It really is as simple as launching a terminal and calling:</p>
+<pre>
+$ vagrant init box_name https://server/api/user/box_name/
+$ vagrant up
+</pre>
+    </div>    
+</div>
+<script>
+    var app = angular
+        .module('app', [])
+        .controller('vagrantAtlas', VagrantAtlasController);
+
+    function VagrantAtlasController($scope, $http) {
+
+        $http.get('api').then(function setBoxes(results) {
+            $scope.boxes = results.data;
+        });
+    }
+</script>
+</body>
+</html>
