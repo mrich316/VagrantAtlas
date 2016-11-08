@@ -108,6 +108,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="parameters.xml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
