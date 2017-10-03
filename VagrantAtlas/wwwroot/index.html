@@ -1,0 +1,123 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vagrant Atlas Gallery: Hosting your vagrant boxes on premise.</title>
+    <meta name="description" content="VagrantAtlas Gallery: Hosting your vagrant boxes on premise.">
+    <meta name="author" content="mrich316">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+</head>
+<body>
+    
+<div id="vagrant-app"></div>
+
+<script type="text/x-template" id="vagrant-app-template">
+    <div class="container">
+        <div class="page-header">
+            <h1 class="hidden-xs">Vagrant Atlas Gallery</h1>
+            <p class="hidden-xs lead">Hosting your vagrant boxes on premise.</p>
+            <blockquote class="hidden-xs hidden-sm">
+                <p>
+                    Computers are incredibly fast, accurate and stupid.
+                    Humans are incredibly slow, inaccurate and brilliant.
+                    Together they are powerful beyond imagination.
+                </p>
+                <footer>“Advances in Instrumentation” v.24 pt.4, 1969, page 691, published by Instrument Society of America</footer>
+            </blockquote>
+            <table class="table">
+                <caption>Virtual machines currently available</caption>
+                <tr>
+                    <th colspan="2">Boxes</th>
+                </tr>
+                <tr v-for="box in boxes" class="list-unstyled">
+                    <td>
+                        <a :href="'boxes/' + box.user + '/' + box.name">{{box.user}}/{{box.name}}</a>
+                    </td>
+                    <td class="hidden-xs">{{box.description}}</td>
+                </tr>
+            </table>
+        </div>
+        <h2>
+            To use a machine, install <a href="https://www.vagrantup.com/docs/getting-started/">Vagrant</a> and start coding !
+        </h2>
+        <div>
+            <p>It really is as simple as launching a terminal and calling:</p>
+            <pre>
+$ vagrant init box_name {{url}}
+$ vagrant up
+</pre>
+        </div>
+        <div class="hidden-xs">
+            <h2 class="hidden-xs">
+                To push a machine
+            </h2>
+            <p>
+                The box is not sent, only a pointer to itself. It is your duty to make sure the box is available
+                at this url and to compute the checksum. The url will by poked by the vagrant client on vagrant init.
+                Example:
+            </p>
+            <pre>curl -X PUT \
+  {{url}}/{version} \
+  -u user:password
+  -H 'content-type: application/json' \
+  -d '{
+          "name": "virtualbox",
+          "url": "http://server.where.boxes.are.hosted/path/to/box_name.box",
+          "checksum_type": "sha256",
+          "checksum": "{checksum}"
+}'
+</pre>
+
+        </div>
+        <div class="hidden-xs">
+            <h2>
+                Updating a Vagrantfile
+            </h2>
+            <p>
+                To change the box of an existing VagrantFile:
+            </p>
+            <pre>
+# Every Vagrant development environment requires a box. You can search for
+# boxes at https://atlas.hashicorp.com/search.
+config.vm.box = "box_name"
+
+# The url from where the 'config.vm.box' box will be fetched if it
+# doesn't already exist on the user's system.
+config.vm.box_url = "{{url}}"
+</pre>
+
+        </div>
+    </div>
+</script>
+<script src="https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.min.js"></script>
+<script>
+    new Vue({
+        el: '#vagrant-app',
+        template: '#vagrant-app-template',
+        data: {
+            url: location.href + 'boxes/{user}/{box_name}',
+            boxes: []
+        },
+        created: function() {
+            this.getBoxes();
+        },
+        methods: {
+            getBoxes: function() {
+                var self = this;
+                fetch('atlas')
+                    .then(function onFetchResults(response) {
+                        return response.json()
+                    })
+                    .then(function getBoxesData(json) {
+                        self.boxes = json
+                    });
+            }
+        }
+    })
+</script>
+</body>
+</html>

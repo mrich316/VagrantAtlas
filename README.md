@@ -15,12 +15,12 @@ I did not invent anything, others chewed everything for me and credits go to the
 
 To be production-ready, this project requires a more robust implementation of IBoxRepository.
 I only provide an in-memory implementation or a json backed file storage. You should also
-customize Startup.cs to fit your needs. You could replace the very simple
-SingletonRepositoriesHttpControllerActivator.cs by a production DI/IoC container
-or simply embed the library (VagrantAtlas) in your own ASP.NET project.
+customize Startup.cs to fit your needs.
 
 This project only protects __PUT__ calls with Basic Authentication. Currently, only a single
-user is supported and configured in web.config.
+user is supported and configured using environment variables (`ATLAS_CLIENT_ID` and `ATLAS_CLIENT_SECRET`).
+
+You can also set the file storage with `ATLAS_BOXES_PATH`.
 
 ## Endpoints
 ### __GET /__ (defaults to /atlas)
