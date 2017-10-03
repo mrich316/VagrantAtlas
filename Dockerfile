@@ -36,16 +36,16 @@ COPY --from=build-image /app/out .
 
 RUN groupadd atlas && \
     useradd -r -s /bin/false atlas -g atlas && \
-	mkdir -p /atlas/data && \
-	chown atlas:atlas /atlas/data && \
-	find . -type d -exec chmod 0755 {} \; && \
+    mkdir -p /atlas/data && \
+    chown atlas:atlas /atlas/data && \
+    find . -type d -exec chmod 0755 {} \; && \
     find . -type f -exec chmod 0644 {} \; && \
-	chmod -R 775 /atlas/data
+    chmod -R 775 /atlas/data
 
 ENV ASPNETCORE_URLS=http://+:5000 \
     ATLAS_BOXES_PATH=/atlas/data/boxes.json \
     ATLAS_CLIENT_ID=vagrant \
-	ATLAS_SECRET=vagrant
+    ATLAS_SECRET=vagrant
 
 VOLUME /atlas/data
 USER atlas
